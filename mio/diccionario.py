@@ -1,0 +1,1 @@
+d = {"a":"alpha", "o":"omega", "g":"gamma"}

@@ -1,0 +1,152 @@
+from random import randint
+from tabulate import tabulate
+
+def crear_lista():
+    [[randint(minimo, maximo) for c in range(columnas) for f in nrange (filas)]]
+
+def suma(a , b)
+    c = [[A[f][c] + B[f][c] for c in range (culumnas(A))] for f in range(filas(A))]
+
+def crear_nula(filas, columnas):
+    """
+    Función que crea una matriz con ceros.
+    Entradas y restricciones:
+    - filas: entero positivo.
+    - columnas: entero positivo.
+    Salidas:
+    Matriz de las dimensiones indicadas
+    con ceros en cada posición.
+    """
+    if type(filas) != int or filas < 1:
+        raise Exception("filas debe ser entero positivo.")
+    if type(columnas) != int or columnas < 1:
+        raise Exception("columnas debe ser entero positivo.")
+    M = []
+    for f in range(filas):
+        fila = []
+        for c in range(columnas):
+            fila.append(0)
+        M.append(fila)
+    # versión con listas por comprensión
+    # M = [[0 for c in range(columnas)] for f in range(filas)]
+    return M
+
+
+
+def crear_aleatoria(filas, columnas, minimo = 0, maximo = 99):
+    if type(filas) != int or filas < 1:
+        raise Exception("filas debe ser entero positivo.")
+    if type(columnas) != int or columnas < 1:
+        raise Exception("columnas debe ser entero positivo.")
+    if type(minimo) != int:
+        raise Exception("minimo debe ser un entero.")
+    if type(maximo) != int or maximo < minimo:
+        raise Exception("maximo debe ser un entero mayor o igual a minimo.")
+    M = []
+    for f in range(filas):
+        fila = []
+        for c in range(columnas):
+            fila.append(randint(minimo, maximo))
+        M.append(fila)
+    # versión con listas por comprensión
+    # M = [[randint(minimo, maximo) for c in range(columnas)] for f in range(filas)]
+    return M
+
+def es_matriz_numerica(M):
+    if type(M) != list:
+        return False
+    for fila in M:
+        if type(fila) != list:
+            return False
+        if len(fila) != len(M[0]):
+            return False
+        for elemento in fila:
+            if type(elemento) not in (int, float):
+                return False
+    return True
+
+def imprimir(M):
+    if not es_matriz_numerica(M):
+        raise Exception("M debe ser una matriz numérica.")
+    print(tabulate(M, tablefmt="simple_grid"))
+
+def filas(M):
+    if not es_matriz_numerica(M):
+        raise Exception("M debe ser una matriz numérica.")
+    return len(M)
+
+def columnas(M):
+    if not es_matriz_numerica(M):
+        raise Exception("M debe ser una matriz numérica.")
+    return len(M[0])
+
+def suma(A, B):
+    if not es_matriz_numerica(A):
+        raise Exception("A debe ser una matriz válida.")
+    if not es_matriz_numerica(B):
+        raise Exception("B debe ser una matriz válida.")
+    if filas(A) != filas(B) or columnas(A) != columnas(B):
+        raise Exception("Las matrices deben tener las mismas dimensiones.")
+    C = crear_nula(filas(A), columnas(A))
+    for f in range(filas(A)):
+        for c in range(columnas(A)):
+            C[f][c] = A[f][c] + B[f][c]
+    # versión con listas por comprensión
+    # C = [[A[f][c] + B[f][c] for c in range (columnas(A))] for f in range(filas(A))]
+    return C
+    
+def resta(A, B):
+    return suma(A, mult_escalar(-1, B))
+
+def mult_escalar(e, M):
+    if type(e) not in (float, int):
+        raise Exception("e debe ser un número.")
+    if not es_matriz_numerica(M):
+        raise Exception("M debe ser una matriz válida.")
+    A = crear_nula(filas(M), columnas(M))
+    for f in range(filas(M)):
+        for c in range(columnas(M)):
+            A[f][c] = e * M[f][c]
+    return A
+
+def div_escalar(e, M):
+    return mult_escalar(1/e, M)
+
+def transpuesta(M):
+    if not es_matriz_numerica(M):
+        raise Exception("M debe ser una matriz válida.")
+    T = crear_nula(columnas(M), filas(M))
+    for f in range(filas(M)):
+        for c in range(columnas(M)):
+            T[c][f] = M[f][c]
+    return T
+
+def mult_matrices(A, B):
+    if not es_matriz_numerica(A):
+        raise Exception("A debe ser una matriz válida.")
+    if not es_matriz_numerica(B):
+        raise Exception("B debe ser una matriz válida.")
+    if columnas(A) != filas(B):
+        raise Exception("La cantidad de columnas de A debe ser igual a la cantidad de filas de B.")
+    C = crear_nula(filas(A), columnas(B))
+    for f in range(filas(A)):
+        for c in range(columnas(B)):
+            suma = 0
+            for e in range(columnas(A)):
+                suma += A[f][e] * B[e][c]
+            C[f][c] = suma
+    return C
+                
+
+
+
+
+
+
+    
+    
+
+
+
+        
+    
