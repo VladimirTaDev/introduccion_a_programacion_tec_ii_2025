@@ -83,7 +83,7 @@ if __name__ == "__main__":
     hideturtle()
     reset()
     
-    canessa(8, 150)
+    sierpinski(5, 150)
 
     update()
     done()
